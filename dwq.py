@@ -15,4 +15,4 @@ async def ржака(ctx):
     print(response)
     await ctx.send(response)
 
-client.run("ODEzNTA3Nzk3MDkzOTc0MDM2.YDQULQ.8XfN6uL-xgZOvmo_LtZQ0yxC33w")
+client.run("token")
