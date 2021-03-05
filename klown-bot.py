@@ -56,4 +56,4 @@ async def on_ready():
 async def ржака(ctx):
     await ctx.send(random.choice(anekdoty))
 
-client.run("ODEzNTA3Nzk3MDkzOTc0MDM2.YDQULQ.GOlyveBrk_Tj8NexmjSgywVFQCc")
+client.run("token")
