@@ -92,4 +92,4 @@ async def humor(context):
 
 
 
-client.run("ODEzNTA3Nzk3MDkzOTc0MDM2.YDQULQ.YH9_xYQ0unbpxqd96LYXMG5w4Ic")
+client.run("token")
