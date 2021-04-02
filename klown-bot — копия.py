@@ -51,7 +51,7 @@ anekdoty = [
     'Садится хохол в поезд, заходит в вагон, нашел свое купе. Открывает дверь, а там три негра сидят! Хохол: — Ой, хлопцы! А шо тут горело?'
 ]
 
-
+images = ['042.jpg', '84666b0a3f97811df3182830314bf754.jpg', '-5kigQVUa_M.jpg', 'H9RP3nk9OJo.jpg', 'IBzZiUpBSZ4.jpg', 'IMG_20210323_190342.jpg', 'iqF0IuSHvrQ.jpg', 'uMQKJA0_oHQ.jpg', 'X8h5f9BeYb4.jpg', 'zhyZCIf3Nuc.jpg' ]
 
 
 @client.event
@@ -77,6 +77,7 @@ async def on_disconnect():
 
 @commands.is_owner()
 async def bot_shutdown(ctx):
+    await ctx.send("молчу")
     await ctx.bot.logout()
 
 
@@ -90,6 +91,67 @@ async def humor(context):
     await context.channel.send(random.choice(anekdoty))
 
 
+@client.command(name='рофл')
+async def randimg(context):
+    randomimage = random.choice(images)
+    await context.send(file=discord.File(randomimage))
 
+
+
+@client.command()
+async def команды(ctx):
+    page1 = discord.Embed (
+        title = 'Page 1/3',
+        description = "!ржака - выдает рандомный анекдот из списка 'anekdoty'",
+        colour = discord.Colour.orange()
+    )
+    page2 = discord.Embed (
+        title = 'Page 2/3',
+        description = "!рофл - рандомный анекдот в виде jpg",
+        colour = discord.Colour.orange()
+    )
+    page3 = discord.Embed (
+        title = 'Page 3/3',
+        description = "!малчат - завершение работы бота и запись взаимодействия с ним в json файл",
+        colour = discord.Colour.orange()
+    )
+
+    pages = [page1, page2, page3]
+
+    message = await ctx.send(embed = page1)
+    await message.add_reaction('⏮')
+    await message.add_reaction('◀')
+    await message.add_reaction('▶')
+    await message.add_reaction('⏭')
+
+    def check(reaction, user):
+        return user == ctx.author
+
+    i = 0
+    reaction = None
+
+    while True:
+        if str(reaction) == '⏮':
+            i = 0
+            await message.edit(embed = pages[i])
+        elif str(reaction) == '◀':
+            if i > 0:
+                i -= 1
+                await message.edit(embed = pages[i])
+        elif str(reaction) == '▶':
+            if i < 2:
+                i += 1
+                await message.edit(embed = pages[i])
+        elif str(reaction) == '⏭':
+            i = 2
+            await message.edit(embed = pages[i])
+        
+        try:
+            reaction, user = await client.wait_for('reaction_add', timeout = 30.0, check = check)
+            await message.remove_reaction(reaction, user)
+        except:
+            break
+
+    await message.clear_reactions()
 
 client.run("token")
