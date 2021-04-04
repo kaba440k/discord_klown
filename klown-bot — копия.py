@@ -175,6 +175,7 @@ async def ban(ctx, member : discord.Member, *, reason=None):
     await ctx.send("цель окончательно уничтожена")
 
 
+    
 
 
 client.run("token")
