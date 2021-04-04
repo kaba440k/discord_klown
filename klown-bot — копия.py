@@ -99,24 +99,33 @@ async def randimg(context):
 
 
 @client.command()
-async def команды(ctx):
+async def menu(ctx):
     page1 = discord.Embed (
-        title = 'Page 1/3',
+        title = 'Page 1/5',
         description = "!ржака - выдает рандомный анекдот из списка 'anekdoty'",
         colour = discord.Colour.orange()
     )
     page2 = discord.Embed (
-        title = 'Page 2/3',
+        title = 'Page 2/5',
         description = "!рофл - рандомный анекдот в виде jpg",
         colour = discord.Colour.orange()
     )
     page3 = discord.Embed (
-        title = 'Page 3/3',
+        title = 'Page 3/5',
         description = "!малчат - завершение работы бота и запись взаимодействия с ним в json файл",
         colour = discord.Colour.orange()
     )
-
-    pages = [page1, page2, page3]
+    page4 = discord.Embed (
+        title = 'Page 4/5',
+        description = "!kick - выгнать участника с сервера через тег(@),(необходимо иметь определенные разрешения)",
+        colour = discord.Colour.orange()
+    )
+    page5 = discord.Embed (
+        title = 'Page 5/5',
+        description = "!ban - забанить участника на сервере через тег(@),(необходимо иметь определенные разрешения)",
+        colour = discord.Colour.orange()
+    )
+    pages = [page1, page2, page3, page4, page5]
 
     message = await ctx.send(embed = page1)
     await message.add_reaction('⏮')
@@ -139,11 +148,11 @@ async def команды(ctx):
                 i -= 1
                 await message.edit(embed = pages[i])
         elif str(reaction) == '▶':
-            if i < 2:
+            if i < 4:
                 i += 1
                 await message.edit(embed = pages[i])
         elif str(reaction) == '⏭':
-            i = 2
+            i = 4
             await message.edit(embed = pages[i])
         
         try:
@@ -154,4 +163,18 @@ async def команды(ctx):
 
     await message.clear_reactions()
 
-client.run("token")
+
+@client.command()
+async def kick(ctx, member : discord.Member, *, reason=None):
+    await member.kick(reason=reason)
+    await ctx.send("цель ранена, но у нее есть шанс")
+
+@client.command()
+async def ban(ctx, member : discord.Member, *, reason=None):
+    await member.ban(reason=reason)
+    await ctx.send("цель окончательно уничтожена")
+
+
+
+
+client.run("ODEzNTA3Nzk3MDkzOTc0MDM2.YDQULQ.KZj2zUjaQSgZko5BS-W7qhX1NZI")
